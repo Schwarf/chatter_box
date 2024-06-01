@@ -24,4 +24,14 @@ interface IMessageDao {
 
     @Query("SELECT * FROM messages WHERE hash = :hash")
     suspend fun loadMessageByHash(hash: String): Message?
+
+    @Query("UPDATE messages SET sentToServer = :sentToServer WHERE id = :id")
+    suspend fun updateSentToServerStatus(id: Long, sentToServer: Boolean)
+
+    @Query("UPDATE messages SET receivedByServer = :receivedByServer WHERE id = :id")
+    suspend fun updateReceivedByServerStatus(id: Long, receivedByServer: Boolean)
+
+    @Query("UPDATE messages SET receivedByClients = :receivedByClients WHERE id = :id")
+    suspend fun updateReceivedByClientsStatus(id: Long, receivedByClients: Boolean)
+
 }

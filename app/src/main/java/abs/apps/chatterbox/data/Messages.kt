@@ -19,5 +19,8 @@ data class Message(
     @ColumnInfo(name = "sender") val sender: String,
     @ColumnInfo(name = "message") val message: String,
     @ColumnInfo(name = "timestamp") val timestamp: Long,
-    @ColumnInfo(name = "hash") val hash: String
+    @ColumnInfo(name = "hash") val hash: String,
+    @ColumnInfo(name = "sentToServer") val sentToServer: Boolean = false,
+    @ColumnInfo(name = "receivedByServer") val receivedByServer: Boolean = false,
+    @ColumnInfo(name = "receivedByClients") val receivedByClients: Boolean = false,
 )
