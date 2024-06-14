@@ -53,8 +53,8 @@ android {
 
 dependencies {
 
-    implementation("com.google.dagger:hilt-android:2.44")
-    kapt("com.google.dagger:hilt-android-compiler:2.44")
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.android.compiler)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -73,7 +73,13 @@ dependencies {
     implementation(libs.room.runtime)
     kapt(libs.room.compiler)
     implementation(libs.room.ktx)
-    implementation("net.zetetic:android-database-sqlcipher:4.5.0")
+    implementation(libs.android.database.sqlcipher)
+    testImplementation(libs.junit)
+    testImplementation(libs.mockito.core)
+    androidTestImplementation(libs.androidx.runner)
+    androidTestImplementation(libs.androidx.rules)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.mockito.android)
 }
 
 kapt {
