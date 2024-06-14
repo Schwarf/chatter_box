@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId = "abs.apps.chatterbox"
-        minSdk = 27
+        minSdk = 26
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -73,6 +73,7 @@ dependencies {
     implementation(libs.room.runtime)
     kapt(libs.room.compiler)
     implementation(libs.room.ktx)
+    implementation("net.zetetic:android-database-sqlcipher:4.5.0")
 }
 
 kapt {
