@@ -14,13 +14,13 @@ interface IMessageDao {
     suspend fun loadMessages(limit: Int, offset: Int): List<Message>
 
     @Query("SELECT * FROM messages ORDER BY timestamp DESC LIMIT :limit OFFSET :offset")
-    suspend fun loadMessagesFlow(limit: Int, offset: Int): Flow<List<Message>>
+    fun loadMessagesFlow(limit: Int, offset: Int): Flow<List<Message>>
 
     @Query("SELECT * FROM messages WHERE sender = :sender ORDER BY timestamp DESC")
     suspend fun loadMessagesBySender(sender: String): List<Message>
 
     @Query("SELECT * FROM messages WHERE sender = :sender ORDER BY timestamp DESC")
-    suspend fun loadMessagesBySenderFlow(sender: String): Flow<List<Message>>
+    fun loadMessagesBySenderFlow(sender: String): Flow<List<Message>>
 
     @Query("SELECT * FROM messages WHERE hash = :hash")
     suspend fun loadMessageByHash(hash: String): Message?
