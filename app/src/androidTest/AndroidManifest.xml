@@ -1,0 +1,7 @@
+<!-- src/androidTest/AndroidManifest.xml -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application
+        android:name=".HiltTestApplication"
+        android:allowBackup="false" />
+</manifest>
