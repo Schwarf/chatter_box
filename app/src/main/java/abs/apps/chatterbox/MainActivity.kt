@@ -2,6 +2,7 @@ package abs.apps.chatterbox
 
 import abs.apps.chatterbox.data.AppDataBase
 import abs.apps.chatterbox.data.encryption.EncryptionKeyManager
+import abs.apps.chatterbox.data.encryption.IKeyManager
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -18,14 +19,18 @@ import androidx.room.Room
 import dagger.hilt.android.AndroidEntryPoint
 import net.sqlcipher.database.SQLiteDatabase
 import net.sqlcipher.database.SupportFactory
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    @Inject lateinit var keyManager: IKeyManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         SQLiteDatabase.loadLibs(this)
-        val secretKey = EncryptionKeyManager.getOrCreateKey()
+        val secretKey = keyManager.getOrCreateKey()
         val passphrase = secretKey.encoded
         val factory = SupportFactory(passphrase)
 
