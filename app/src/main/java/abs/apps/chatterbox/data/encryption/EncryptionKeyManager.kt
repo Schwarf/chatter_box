@@ -6,10 +6,10 @@ import java.security.KeyStore
 import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
 
-object EncryptionKeyManager {
-    private const val KEY_ALIAS = "ChatterBoxKey"
+class EncryptionKeyManager : IKeyManager{
+    private val KEY_ALIAS = "ChatterBoxKey"
 
-    fun getOrCreateKey(): SecretKey {
+    override fun getOrCreateKey(): SecretKey {
         val keyStore = KeyStore.getInstance("AndroidKeyStore").apply { load(null) }
 
         // Check if key already exists
