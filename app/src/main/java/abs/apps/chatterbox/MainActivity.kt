@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import abs.apps.chatterbox.ui.theme.ChatClientPrototypeTheme
+import android.app.Application
 import androidx.room.Room
 import dagger.hilt.android.AndroidEntryPoint
 import net.sqlcipher.database.SQLiteDatabase
@@ -25,20 +26,9 @@ import javax.inject.Inject
 class MainActivity : ComponentActivity() {
 
     @Inject lateinit var keyManager: IKeyManager
-
+    @Inject lateinit var db: AppDataBase
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        SQLiteDatabase.loadLibs(this)
-        val secretKey = keyManager.getOrCreateKey()
-        val passphrase = secretKey.encoded
-        val factory = SupportFactory(passphrase)
-
-        val db = Room.databaseBuilder(
-            applicationContext,
-            AppDataBase::class.java, "chatterbox.db"
-        ).openHelperFactory(factory)
-            .build()
 
         enableEdgeToEdge()
         setContent {
