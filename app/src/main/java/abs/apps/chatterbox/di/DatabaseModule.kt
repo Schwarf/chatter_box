@@ -1,5 +1,6 @@
-package abs.apps.chatterbox.data
+package abs.apps.chatterbox.di
 
+import abs.apps.chatterbox.data.AppDataBase
 import android.content.Context
 import androidx.room.Room
 import dagger.Module
