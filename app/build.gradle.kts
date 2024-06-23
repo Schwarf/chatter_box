@@ -54,6 +54,7 @@ android {
 dependencies {
 
     implementation(libs.hilt.android)
+    implementation(libs.androidx.runtime.livedata)
     androidTestImplementation(libs.hilt.android.testing)
     kaptAndroidTest(libs.hilt.android.compiler)
     kapt(libs.hilt.android.compiler)
@@ -62,6 +63,7 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)
+    implementation(libs.hilt.navigation.compose)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
