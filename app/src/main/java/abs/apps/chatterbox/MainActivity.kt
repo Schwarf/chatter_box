@@ -44,12 +44,12 @@ import javax.inject.Inject
                         Log.d("MainActivity", "Entered Surface!")
                         ChatScreen(sender = "User")
                     }
-                //                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-    //                    Greeting(
-    //                        name = "Android",
-    //                        modifier = Modifier.padding(innerPadding)
-    //                    )
-    //                }
+//                    Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+//                    Greeting(
+//                        name = "Android",
+//                        modifier = Modifier.padding(innerPadding)
+//                    )
+//                }
                 }
             }
         }

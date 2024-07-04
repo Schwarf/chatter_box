@@ -42,17 +42,52 @@ fun ChatScreen(
             .fillMaxSize()
             .padding(16.dp)
     ) {
-
+        MessageList(messages = messages, modifier = Modifier.weight(1f))
+        MessageInput(
+            messageText = messageText,
+            onMessageTextChanged = { messageText = it },
+            onSendClick = {
+                viewModel.sendMessage(messageText)
+                messageText = ""
+                })
     }
 }
 
 @Composable
-fun MessageList(messages: List<Message>) {
+fun MessageList(messages: List<Message>, modifier: Modifier = Modifier) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
-        reverseLayout = true
+        reverseLayout = false
     ) {
         items(messages) { message -> MessageItem(message) }
+        // Adding dummy text to check if the list is rendered
+        item {
+            Text(
+                text = "Dummy message 1",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp),
+                style = MaterialTheme.typography.bodyMedium
+            )
+        }
+        item {
+            Text(
+                text = "Dummy message 2",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp),
+                style = MaterialTheme.typography.bodyMedium
+            )
+        }
+        item {
+            Text(
+                text = "LONDhauioncsdvcnaocnvvn wdolvcn sdavosdavnsdpiov vn sdaovn sdvonsdobfvvvdajlbvbv sdjov sdovb sdov sdaov daojv sdajov sd",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp),
+                style = MaterialTheme.typography.bodyMedium
+            )
+        }
     }
 }
 
@@ -60,7 +95,7 @@ fun MessageList(messages: List<Message>) {
 @Composable
 fun MessageItem(message: Message) {
     Text(
-        text = message.message,
+        text = message.text,
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp),

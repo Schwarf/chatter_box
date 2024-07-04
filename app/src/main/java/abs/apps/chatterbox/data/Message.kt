@@ -16,8 +16,8 @@ import androidx.room.PrimaryKey
 )
 data class Message(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
-    @ColumnInfo(name = "sender") val sender: String,
-    @ColumnInfo(name = "message") val message: String,
+    @ColumnInfo(name = "sender") val sender: String="",
+    @ColumnInfo(name = "text") val text: String,
     @ColumnInfo(name = "timestamp") val timestamp: Long,
     @ColumnInfo(name = "hash") val hash: String,
     @ColumnInfo(name = "sentToServer") val sentToServer: Boolean = false,

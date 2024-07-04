@@ -1,7 +1,7 @@
 package abs.apps.chatterbox.ui.viemodels
 
-import abs.apps.chatterbox.data.repositories.MessageRepository
 import abs.apps.chatterbox.data.Message
+import abs.apps.chatterbox.data.repositories.MessageRepository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -24,8 +24,14 @@ class MessageViewModel @Inject constructor(
         }
     }
 
-    fun addMessage(message: Message) {
+    fun sendMessage(messageText: String) {
         viewModelScope.launch {
+            val message = Message(
+                sender = "Alice",
+                text = messageText,
+                timestamp = System.currentTimeMillis(),
+                hash = "some_hash_value"
+            )
             repository.insertMessage(message)
             loadMessages(message.sender)
         }
