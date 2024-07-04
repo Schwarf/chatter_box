@@ -1,6 +1,6 @@
 package abs.apps.chatterbox.ui.screens
 
-import abs.apps.chatterbox.data.Message
+import abs.apps.chatterbox.data.Messages
 import abs.apps.chatterbox.ui.viemodels.MessageViewModel
 import android.util.Log
 import androidx.compose.foundation.layout.Box
@@ -13,7 +13,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Send
-import androidx.compose.material.icons.filled.Send
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -69,7 +68,7 @@ fun ChatScreen(
 }
 
 @Composable
-fun MessageList(messages: List<Message>, modifier: Modifier = Modifier) {
+fun MessageList(messages: List<Messages>, modifier: Modifier = Modifier) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         reverseLayout = true
@@ -80,9 +79,9 @@ fun MessageList(messages: List<Message>, modifier: Modifier = Modifier) {
 
 
 @Composable
-fun MessageItem(message: Message) {
+fun MessageItem(messages: Messages) {
     Text(
-        text = message.text,
+        text = messages.text,
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp),

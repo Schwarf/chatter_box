@@ -9,14 +9,15 @@ import androidx.room.PrimaryKey
     tableName = "messages",
     indices = [
         Index(value = ["timestamp"]),
-        Index(value = ["sender"]),
+        Index(value = ["chatId"]),
         Index(value = ["hash"]),
-        Index(value = ["sender", "timestamp"])
+        Index(value = ["chatId", "timestamp"])
     ]
 )
-data class Message(
+data class Messages(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
-    @ColumnInfo(name = "sender") val sender: String="",
+    @ColumnInfo(name = "chatId") val chatId: String,
+    @ColumnInfo(name = "sender") val sender: String,
     @ColumnInfo(name = "text") val text: String,
     @ColumnInfo(name = "timestamp") val timestamp: Long,
     @ColumnInfo(name = "hash") val hash: String,
