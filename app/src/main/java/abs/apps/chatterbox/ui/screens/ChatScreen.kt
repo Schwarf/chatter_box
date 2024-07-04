@@ -37,6 +37,7 @@ fun ChatScreen(
     sender: String
 ) {
     Log.d("ChatScreen", "ChatScreen called")
+    viewModel.loadMessages(sender)
     val messages by viewModel.messages.observeAsState(emptyList())
     var messageText by remember { mutableStateOf("") }
 
@@ -71,40 +72,9 @@ fun ChatScreen(
 fun MessageList(messages: List<Message>, modifier: Modifier = Modifier) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
-        reverseLayout = false
+        reverseLayout = true
     ) {
-//        items(messages) { message -> MessageItem(message) }
-        // Adding dummy text to check if the list is rendered
-        item {
-            Text(
-                text = "Dummy message 1",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp),
-                style = MaterialTheme.typography.bodyMedium,
-                color = Color.Red
-            )
-        }
-        item {
-            Text(
-                text = "Dummy message 2",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp),
-                style = MaterialTheme.typography.bodyMedium,
-                color = Color.Blue
-            )
-        }
-        item {
-            Text(
-                text = "LONDhauioncsdvcnaocnvvn wdolvcn sdavosdavnsdpiov vn sdaovn sdvonsdobfvvvdajlbvbv sdjov sdovb sdov sdaov daojv sdajov sd",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp),
-                style = MaterialTheme.typography.bodyMedium,
-                color = Color.Cyan
-            )
-        }
+        items(messages) { message -> MessageItem(message) }
     }
 }
 

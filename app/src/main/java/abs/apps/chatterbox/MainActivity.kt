@@ -42,7 +42,7 @@ import javax.inject.Inject
                         color = MaterialTheme.colorScheme.background
                     ) {
                         Log.d("MainActivity", "Entered Surface!")
-                        ChatScreen(sender = "User")
+                        ChatScreen(sender = "Alice")
                     }
 //                    Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
 //                    Greeting(
