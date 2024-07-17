@@ -17,9 +17,9 @@ rules = "1.5.0"
 runner = "1.5.2"
 runtimeLivedata = "1.6.8"
 hiltNavigationCompose = "1.2.0"
-retrofit = "2.9.1"  # Updated from 2.9.0 to 2.9.1
+retrofit = "2.11.0"  # Updated from 2.9.0 to 2.9.1
 okhttp = "4.10.0"   # Example of updating OkHttp
-gson = "2.10.1"      # Example of updating Gson
+gson = "2.11.0"      # Example of updating Gson
 
 [libraries]
 android-database-sqlcipher = { module = "net.zetetic:android-database-sqlcipher", version.ref = "androidDatabaseSqlcipher" }
