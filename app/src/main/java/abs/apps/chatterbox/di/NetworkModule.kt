@@ -1,3 +1,6 @@
+package abs.apps.chatterbox.di
+
+import RetrofitInstance
 import abs.apps.chatterbox.connect.api.ApiHelper
 import abs.apps.chatterbox.connect.api.ChatService
 import dagger.Module
