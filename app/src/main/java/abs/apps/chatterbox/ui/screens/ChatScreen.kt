@@ -6,8 +6,11 @@ import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -50,7 +53,11 @@ fun ChatScreen(
                 .fillMaxSize()
                 .padding(bottom = 56.dp) // Ensure space for the input field
         ) {
-            MessageList(messages = messages, modifier = Modifier.weight(1f))
+            MessageList(
+                messages = messages,
+                modifier = Modifier.weight(1f)
+            )
+            Spacer(modifier = Modifier.height(20.dp))
         }
         MessageInput(
             messageText = messageText,
@@ -62,7 +69,7 @@ fun ChatScreen(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .fillMaxWidth()
-                .padding(8.dp)
+                .padding(horizontal = 8.dp, vertical = 20.dp)
         )
     }
 }
@@ -70,7 +77,7 @@ fun ChatScreen(
 @Composable
 fun MessageList(messages: List<Messages>, modifier: Modifier = Modifier) {
     LazyColumn(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxHeight(),
         reverseLayout = true
     ) {
         items(messages) { message -> MessageItem(message) }
@@ -108,8 +115,10 @@ fun MessageInput(
             placeholder = { Text("Type a message") }
         )
         IconButton(onClick = onSendClick) {
-            Icon(imageVector = Icons.AutoMirrored.Default.Send, contentDescription = "Send",
-                tint = Color.Green)
+            Icon(
+                imageVector = Icons.AutoMirrored.Default.Send, contentDescription = "Send",
+                tint = Color.Green
+            )
         }
     }
 }
