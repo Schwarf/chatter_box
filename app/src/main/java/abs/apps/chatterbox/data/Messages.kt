@@ -16,8 +16,8 @@ import androidx.room.PrimaryKey
 )
     data class Messages(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
-    @ColumnInfo(name = "chatId") val chatId: Int,
-    @ColumnInfo(name = "clientId") val clientId: Int,
+    @ColumnInfo(name = "chatId") val chatId: String,
+    @ColumnInfo(name = "sender") val sender: String,
     @ColumnInfo(name = "text") val text: String,
     @ColumnInfo(name = "timestamp") val timestamp: Long,
     @ColumnInfo(name = "hash") val hash: String,

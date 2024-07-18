@@ -27,14 +27,14 @@ class MessageViewModel @Inject constructor(
     fun sendMessage(messageText: String) {
         viewModelScope.launch {
             val messages = Messages(
-                clientId = "Alice",
+                sender = "Alice",
                 text = messageText,
                 timestamp = System.currentTimeMillis(),
                 hash = "some_hash_value",
                 chatId = "XX"
             )
             repository.insertMessage(messages)
-            loadMessages(messages.clientId)
+            loadMessages(messages.sender)
         }
     }
 }
