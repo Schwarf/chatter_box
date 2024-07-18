@@ -16,10 +16,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import abs.apps.chatterbox.ui.theme.ChatClientPrototypeTheme
+import abs.apps.chatterbox.ui.viemodels.MessageViewModel
 import android.app.Application
 import android.util.Log
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.room.Room
 import dagger.hilt.android.AndroidEntryPoint
 import net.sqlcipher.database.SQLiteDatabase

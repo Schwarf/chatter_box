@@ -16,6 +16,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Send
+import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -34,10 +35,9 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 
 @Composable
-fun ChatScreen(
-    viewModel: MessageViewModel = hiltViewModel(),
-    sender: String
-) {
+fun ChatScreen(sender: String) {
+    val viewModel: MessageViewModel = hiltViewModel()
+    val onButtonClick: () -> Unit = {viewModel.attemptRegistration()}
     Log.d("ChatScreen", "ChatScreen called")
     viewModel.loadMessages(sender)
     val messages by viewModel.messages.observeAsState(emptyList())
@@ -71,6 +71,15 @@ fun ChatScreen(
                 .fillMaxWidth()
                 .padding(horizontal = 8.dp, vertical = 20.dp)
         )
+        IconButton(
+            onClick = onButtonClick,
+            modifier = Modifier.align(Alignment.TopStart)
+        ) {
+            Icon(
+                imageVector = Icons.Default.CheckCircle,
+                contentDescription = "Back"
+            )
+        }
     }
 }
 
