@@ -7,12 +7,16 @@ import abs.apps.chatterbox.connect.models.RegisterResponse
 import abs.apps.chatterbox.data.Credentials
 import abs.apps.chatterbox.data.repositories.ICredentialsRepository
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import okhttp3.Response
+import okhttp3.WebSocket
+import okhttp3.WebSocketListener
 import javax.inject.Inject
 
 class UserRepository @Inject constructor(
@@ -74,7 +78,28 @@ class UserRepository @Inject constructor(
     }
 
     override fun connectWebSocket(token: String) {
-        // Initialize and manage WebSocket connection
-    }
-}
+        val listener = object : WebSocketListener() {
+            override fun onOpen(webSocket: WebSocket, response: Response) {
+                super.onOpen(webSocket, response)
+                Log.d("WebSocket", "Connected to WS")
+            }
+
+            override fun onMessage(webSocket: WebSocket, text: String) {
+                super.onMessage(webSocket, text)
+                Log.d("WebSocket", "Receiving : $text")
+            }
+
+            override fun onClosing(webSocket: WebSocket, code: Int, reason: String) {
+                super.onClosing(webSocket, code, reason)
+                webSocket.close(1000, null)
+                Log.d("WebSocket", "Closing : $code / $reason")
+            }
+
+            override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
+                super.onFailure(webSocket, t, response)
+                Log.e("WebSocket", "Error : " + t.message)
+            }
+        }
+        apiHelper.connectWebSocket(token, listener)
+    }}
 
