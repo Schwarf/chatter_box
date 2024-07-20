@@ -16,6 +16,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Send
+import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -37,7 +38,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 @Composable
 fun ChatScreen(clientId: Int) {
     val viewModel: MessageViewModel = hiltViewModel()
-    val onButtonClick: () -> Unit = {viewModel.attemptRegistration()}
+    val onRegisterButtonClick: () -> Unit = {viewModel.attemptRegistration()}
+    val onStartChatButtonClick: () -> Unit = {}
     Log.d("ChatScreen", "ChatScreen called")
     viewModel.loadMessages(clientId)
     val messages by viewModel.messages.observeAsState(emptyList())
@@ -72,12 +74,21 @@ fun ChatScreen(clientId: Int) {
                 .padding(horizontal = 8.dp, vertical = 20.dp)
         )
         IconButton(
-            onClick = onButtonClick,
+            onClick = onRegisterButtonClick,
             modifier = Modifier.align(Alignment.TopStart)
         ) {
             Icon(
                 imageVector = Icons.Default.CheckCircle,
-                contentDescription = "Back"
+                contentDescription = "Register"
+            )
+        }
+        IconButton(
+            onClick = onStartChatButtonClick,
+            modifier = Modifier.align(Alignment.TopEnd)
+        ) {
+            Icon(
+                imageVector = Icons.Default.AccountBox,
+                contentDescription = "Chat"
             )
         }
     }
