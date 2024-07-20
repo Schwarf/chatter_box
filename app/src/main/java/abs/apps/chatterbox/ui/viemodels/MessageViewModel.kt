@@ -2,8 +2,10 @@ package abs.apps.chatterbox.ui.viemodels
 
 import abs.apps.chatterbox.connect.api.Resource
 import abs.apps.chatterbox.connect.models.RegisterResponse
+import abs.apps.chatterbox.connect.repositories.IUserRepository
 import abs.apps.chatterbox.connect.repositories.UserRepository
 import abs.apps.chatterbox.data.Messages
+import abs.apps.chatterbox.data.repositories.IMessageRepository
 import abs.apps.chatterbox.data.repositories.MessageRepository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -16,8 +18,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MessageViewModel @Inject constructor(
-    private val messageRepository: MessageRepository,
-    private val userRepository: UserRepository
+    private val messageRepository: IMessageRepository,
+    private val userRepository: IUserRepository
 ) : ViewModel() {
 
     private val _messages = MutableLiveData<List<Messages>>()
@@ -40,6 +42,7 @@ class MessageViewModel @Inject constructor(
             )
             messageRepository.insertMessage(messages)
             loadMessages(messages.clientId)
+
         }
     }
 
