@@ -43,7 +43,7 @@ class ApiHelper(private val chatService: ChatService) {
 
     fun connectWebSocket(token: String, listener: WebSocketListener): WebSocket {
         val request = Request.Builder()
-            .url("ws://10.0.2.2:808/ws") // Change this URL to your WebSocket endpoint
+            .url("ws://10.0.2.2:8080/ws") // Change this URL to your WebSocket endpoint
             .addHeader("Authorization", "Bearer $token")
             .build()
 

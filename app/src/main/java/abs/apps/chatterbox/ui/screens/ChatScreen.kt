@@ -39,7 +39,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 fun ChatScreen(clientId: Int) {
     val viewModel: MessageViewModel = hiltViewModel()
     val onRegisterButtonClick: () -> Unit = {viewModel.attemptRegistration()}
-    val onStartChatButtonClick: () -> Unit = {}
+    val onStartChatButtonClick: () -> Unit = {viewModel.onStartChatClicked()}
     Log.d("ChatScreen", "ChatScreen called")
     viewModel.loadMessages(clientId)
     val messages by viewModel.messages.observeAsState(emptyList())
