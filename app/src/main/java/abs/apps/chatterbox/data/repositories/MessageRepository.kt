@@ -20,12 +20,12 @@ class MessageRepository @Inject constructor(
         return messageDao.loadMessagesFlow(limit, offset)
     }
 
-    override suspend fun loadMessagesBySender(sender: String): List<Messages> {
-        return messageDao.loadMessagesBySender(sender)
+    override suspend fun loadMessagesBySender(clientId: Int): List<Messages> {
+        return messageDao.loadMessagesBySender(clientId)
     }
 
-    override fun loadMessagesBySenderFlow(sender: String): Flow<List<Messages>> {
-        return messageDao.loadMessagesBySenderFlow(sender)
+    override fun loadMessagesBySenderFlow(clientId: Int): Flow<List<Messages>> {
+        return messageDao.loadMessagesBySenderFlow(clientId)
     }
 
     override suspend fun loadMessageByHash(hash: String): Messages? {

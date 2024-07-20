@@ -27,23 +27,23 @@ class MessageViewModel @Inject constructor(
     private val _messages = MutableLiveData<List<Messages>>()
     val messages: LiveData<List<Messages>> get() = _messages
 
-    fun loadMessages(sender: String) {
+    fun loadMessages(clientId: Int) {
         viewModelScope.launch {
-            _messages.value = messageRepository.loadMessagesBySender(sender)
+            _messages.value = messageRepository.loadMessagesBySender(clientId)
         }
     }
 
     fun sendMessage(messageText: String) {
         viewModelScope.launch {
             val messages = Messages(
-                sender = "Alice",
+                clientId = 1,
                 text = messageText,
-                timestamp = System.currentTimeMillis(),
+                timestamp_ms = System.currentTimeMillis(),
                 hash = "some_hash_value",
                 chatId = "XX"
             )
             messageRepository.insertMessage(messages)
-            loadMessages(messages.sender)
+            loadMessages(messages.clientId)
         }
     }
 

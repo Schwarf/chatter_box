@@ -10,17 +10,17 @@ import kotlinx.coroutines.flow.Flow
 interface IMessageDao {
     @Insert
     suspend fun insertMessage(messages: Messages)
-    @Query("SELECT * FROM messages ORDER BY timestamp DESC LIMIT :limit OFFSET :offset")
+    @Query("SELECT * FROM messages ORDER BY timestamp_ms DESC LIMIT :limit OFFSET :offset")
     suspend fun loadMessages(limit: Int, offset: Int): List<Messages>
 
-    @Query("SELECT * FROM messages ORDER BY timestamp DESC LIMIT :limit OFFSET :offset")
+    @Query("SELECT * FROM messages ORDER BY timestamp_ms DESC LIMIT :limit OFFSET :offset")
     fun loadMessagesFlow(limit: Int, offset: Int): Flow<List<Messages>>
 
-    @Query("SELECT * FROM messages WHERE sender = :sender ORDER BY timestamp DESC")
-    suspend fun loadMessagesBySender(sender: String): List<Messages>
+    @Query("SELECT * FROM messages WHERE clientId = :clientId ORDER BY timestamp_ms DESC")
+    suspend fun loadMessagesBySender(clientId: Int): List<Messages>
 
-    @Query("SELECT * FROM messages WHERE sender = :sender ORDER BY timestamp DESC")
-    fun loadMessagesBySenderFlow(sender: String): Flow<List<Messages>>
+    @Query("SELECT * FROM messages WHERE clientId = :clientId ORDER BY timestamp_ms DESC")
+    fun loadMessagesBySenderFlow(clientId: Int): Flow<List<Messages>>
 
     @Query("SELECT * FROM messages WHERE hash = :hash")
     suspend fun loadMessageByHash(hash: String): Messages?

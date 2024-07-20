@@ -35,11 +35,11 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 
 @Composable
-fun ChatScreen(sender: String) {
+fun ChatScreen(clientId: Int) {
     val viewModel: MessageViewModel = hiltViewModel()
     val onButtonClick: () -> Unit = {viewModel.attemptRegistration()}
     Log.d("ChatScreen", "ChatScreen called")
-    viewModel.loadMessages(sender)
+    viewModel.loadMessages(clientId)
     val messages by viewModel.messages.observeAsState(emptyList())
     var messageText by remember { mutableStateOf("") }
 
