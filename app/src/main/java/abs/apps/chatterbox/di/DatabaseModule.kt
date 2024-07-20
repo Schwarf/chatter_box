@@ -1,6 +1,7 @@
 package abs.apps.chatterbox.di
 
 import abs.apps.chatterbox.data.AppDataBase
+import abs.apps.chatterbox.data.dao.ICredentialsDao
 import android.content.Context
 import androidx.room.Room
 import dagger.Module
@@ -37,6 +38,11 @@ object DatabaseModule {
     @Provides
     fun provideMessageDao(database: AppDataBase): IMessageDao {
         return database.messageDao()
+    }
+
+    @Provides
+    fun provideCredentialsDao(database: AppDataBase): ICredentialsDao {
+        return database.credentialsDao()
     }
 
     @Provides
