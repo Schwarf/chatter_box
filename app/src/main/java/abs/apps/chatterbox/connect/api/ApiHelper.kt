@@ -9,6 +9,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class ApiHelper(private val chatService: ChatService) {
+
     fun registerUser(request: RegisterRequest): LiveData<Resource<RegisterResponse>> {
         val result = MutableLiveData<Resource<RegisterResponse>>()
         result.postValue(Resource.Loading())

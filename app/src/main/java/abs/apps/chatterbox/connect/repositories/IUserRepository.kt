@@ -7,6 +7,6 @@ import androidx.lifecycle.LiveData
 
 interface IUserRepository {
     fun registerUser(registerRequest: RegisterRequest): LiveData<Resource<RegisterResponse>>
-    fun loadCredentials(): RegisterRequest?
+    fun loadRegistrationCredentials(): RegisterRequest?
     fun connectWebSocket(token: String)
 }

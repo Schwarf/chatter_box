@@ -21,7 +21,7 @@ class MessageViewModel @Inject constructor(
 ) : ViewModel() {
 
     init {
-        val registerRequest = userRepository.loadCredentials()
+        val registerRequest = userRepository.loadRegistrationCredentials()
     }
 
     private val _messages = MutableLiveData<List<Messages>>()
@@ -68,7 +68,7 @@ class MessageViewModel @Inject constructor(
     }
 
     fun attemptRegistration() {
-        val registerRequest = userRepository.loadCredentials()
+        val registerRequest = userRepository.loadRegistrationCredentials()
         if (registerRequest != null) {
             userRepository.registerUser(registerRequest).observeForever { resource ->
                 // Handle the response here
