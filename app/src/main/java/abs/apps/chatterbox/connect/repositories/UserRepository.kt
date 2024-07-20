@@ -4,9 +4,7 @@ import abs.apps.chatterbox.connect.api.ApiHelper
 import abs.apps.chatterbox.connect.api.Resource
 import abs.apps.chatterbox.connect.models.RegisterRequest
 import abs.apps.chatterbox.connect.models.RegisterResponse
-import abs.apps.chatterbox.data.AppDataBase
 import abs.apps.chatterbox.data.Credentials
-import abs.apps.chatterbox.data.repositories.CredentialsRepository
 import abs.apps.chatterbox.data.repositories.ICredentialsRepository
 import android.content.Context
 import androidx.lifecycle.LiveData
@@ -17,8 +15,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class UserRepository @Inject constructor (private val apiHelper: ApiHelper, private val context: Context,
-    private val credentialsRepository: ICredentialsRepository): IUserRepository {
+class UserRepository @Inject constructor(
+    private val apiHelper: ApiHelper, private val context: Context,
+    private val credentialsRepository: ICredentialsRepository
+) : IUserRepository {
 
 
     override fun registerUser(registerRequest: RegisterRequest): LiveData<Resource<RegisterResponse>> {
@@ -72,6 +72,7 @@ class UserRepository @Inject constructor (private val apiHelper: ApiHelper, priv
             )
         }
     }
+
     override fun connectWebSocket(token: String) {
         // Initialize and manage WebSocket connection
     }

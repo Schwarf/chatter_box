@@ -6,7 +6,7 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 
 @Database(entities = [Messages::class, Credentials::class], version = 1)
-abstract class AppDataBase : RoomDatabase(){
+abstract class AppDataBase : RoomDatabase() {
     abstract fun messageDao(): IMessageDao
     abstract fun credentialsDao(): ICredentialsDao
 }

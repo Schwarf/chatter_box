@@ -15,7 +15,10 @@ class ApiHelper(private val chatService: ChatService) {
         result.postValue(Resource.Loading())
 
         chatService.registerClient(request).enqueue(object : Callback<RegisterResponse> {
-            override fun onResponse(call: Call<RegisterResponse>, response: Response<RegisterResponse>) {
+            override fun onResponse(
+                call: Call<RegisterResponse>,
+                response: Response<RegisterResponse>
+            ) {
                 if (response.isSuccessful) {
                     response.body()?.let {
                         result.postValue(Resource.Success(it))

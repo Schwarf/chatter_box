@@ -2,6 +2,7 @@ package abs.apps.chatterbox.data.repositories
 
 import abs.apps.chatterbox.data.Messages
 import kotlinx.coroutines.flow.Flow
+
 interface IMessageRepository {
     suspend fun insertMessage(messages: Messages)
     suspend fun loadMessages(limit: Int, offset: Int): List<Messages>

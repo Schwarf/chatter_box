@@ -14,7 +14,7 @@ import androidx.room.PrimaryKey
         Index(value = ["chatId", "timestamp_ms"])
     ]
 )
-    data class Messages(
+data class Messages(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     @ColumnInfo(name = "chatId") val chatId: String,
     @ColumnInfo(name = "clientId") val clientId: Int,
@@ -24,4 +24,4 @@ import androidx.room.PrimaryKey
     @ColumnInfo(name = "sentToServer") val sentToServer: Boolean = false,
     @ColumnInfo(name = "receivedByServer") val receivedByServer: Boolean = false,
     @ColumnInfo(name = "receivedByClients") val receivedByClients: Boolean = false,
-    )
+)

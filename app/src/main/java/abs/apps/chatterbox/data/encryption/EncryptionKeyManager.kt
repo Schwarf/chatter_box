@@ -6,7 +6,7 @@ import java.security.KeyStore
 import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
 
-class EncryptionKeyManager : IKeyManager{
+class EncryptionKeyManager : IKeyManager {
     private val KEY_ALIAS = "ChatterBoxKey"
 
     override fun getOrCreateKey(): SecretKey {
@@ -19,7 +19,8 @@ class EncryptionKeyManager : IKeyManager{
         }
 
         // Generate new key if it doesn't exist
-        val keyGenerator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, "AndroidKeyStore")
+        val keyGenerator =
+            KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, "AndroidKeyStore")
         val keyGenParameterSpec = KeyGenParameterSpec.Builder(
             KEY_ALIAS,
             KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT

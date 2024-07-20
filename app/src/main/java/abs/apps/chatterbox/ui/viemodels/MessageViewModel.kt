@@ -20,10 +20,6 @@ class MessageViewModel @Inject constructor(
     private val userRepository: UserRepository
 ) : ViewModel() {
 
-    init {
-        val registerRequest = userRepository.loadRegistrationCredentials()
-    }
-
     private val _messages = MutableLiveData<List<Messages>>()
     val messages: LiveData<List<Messages>> get() = _messages
 

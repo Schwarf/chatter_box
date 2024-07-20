@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.Flow
 interface IMessageDao {
     @Insert
     suspend fun insertMessage(messages: Messages)
+
     @Query("SELECT * FROM messages ORDER BY timestamp_ms DESC LIMIT :limit OFFSET :offset")
     suspend fun loadMessages(limit: Int, offset: Int): List<Messages>
 
