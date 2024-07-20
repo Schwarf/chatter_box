@@ -6,10 +6,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import retrofit2.Call
 import retrofit2.Callback
-import retrofit2.Response
+import retrofit2.Response as RetrofitResponse
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.WebSocket
+import okhttp3.WebSocketListener
+import okhttp3.Response
 
 class ApiHelper(private val chatService: ChatService) {
 
+    private val client = OkHttpClient() // Client for WebSocket connections
     fun registerUser(request: RegisterRequest): LiveData<Resource<RegisterResponse>> {
         val result = MutableLiveData<Resource<RegisterResponse>>()
         result.postValue(Resource.Loading())
@@ -17,7 +23,7 @@ class ApiHelper(private val chatService: ChatService) {
         chatService.registerClient(request).enqueue(object : Callback<RegisterResponse> {
             override fun onResponse(
                 call: Call<RegisterResponse>,
-                response: Response<RegisterResponse>
+                response: RetrofitResponse<RegisterResponse>
             ) {
                 if (response.isSuccessful) {
                     response.body()?.let {
@@ -33,6 +39,15 @@ class ApiHelper(private val chatService: ChatService) {
             }
         })
         return result
+    }
+
+    fun connectWebSocket(token: String, listener: WebSocketListener): WebSocket {
+        val request = Request.Builder()
+            .url("ws://yourserver.com/ws") // Change this URL to your WebSocket endpoint
+            .addHeader("Authorization", "Bearer $token")
+            .build()
+
+        return client.newWebSocket(request, listener)
     }
 }
 
