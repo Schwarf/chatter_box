@@ -6,6 +6,8 @@ import abs.apps.chatterbox.connect.models.RegisterRequest
 import abs.apps.chatterbox.connect.models.RegisterResponse
 import abs.apps.chatterbox.data.AppDataBase
 import abs.apps.chatterbox.data.Credentials
+import abs.apps.chatterbox.data.repositories.CredentialsRepository
+import abs.apps.chatterbox.data.repositories.ICredentialsRepository
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -16,8 +18,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class UserRepository @Inject constructor (private val apiHelper: ApiHelper, private val context: Context,
-    private val dataBase: AppDataBase): IUserRepository {
-    private val credentialsDao = dataBase.credentialsDao()
+    private val credentialsRepository: ICredentialsRepository): IUserRepository {
 
 
     override fun registerUser(registerRequest: RegisterRequest): LiveData<Resource<RegisterResponse>> {
@@ -61,7 +62,7 @@ class UserRepository @Inject constructor (private val apiHelper: ApiHelper, priv
 
     private fun storeCredentials(registerResponse: RegisterResponse) {
         CoroutineScope(Dispatchers.IO).launch {
-            credentialsDao.insertOrUpdateCredentials(
+            credentialsRepository.updateCredentials(
                 Credentials(
                     idAtServer = registerResponse.id,
                     userName = registerResponse.username,

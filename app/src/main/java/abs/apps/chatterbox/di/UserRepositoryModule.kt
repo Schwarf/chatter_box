@@ -2,7 +2,7 @@ package abs.apps.chatterbox.di
 
 import abs.apps.chatterbox.connect.api.ApiHelper
 import abs.apps.chatterbox.connect.repositories.UserRepository
-import abs.apps.chatterbox.data.AppDataBase
+import abs.apps.chatterbox.data.repositories.ICredentialsRepository
 import android.content.Context
 import dagger.Module
 import dagger.Provides
@@ -15,7 +15,11 @@ import dagger.hilt.components.SingletonComponent
 object UserRepositoryModule {
 
     @Provides
-    fun provideUserRepository(apiHelper: ApiHelper, @ApplicationContext context: Context, dataBase: AppDataBase): UserRepository {
-        return UserRepository(apiHelper, context, dataBase)
+    fun provideUserRepository(
+        apiHelper: ApiHelper,
+        @ApplicationContext context: Context,
+        credentialsRepository: ICredentialsRepository
+    ): UserRepository {
+        return UserRepository(apiHelper, context, credentialsRepository)
     }
 }
