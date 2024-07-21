@@ -3,12 +3,10 @@ package abs.apps.chatterbox.ui.viemodels
 import abs.apps.chatterbox.connect.api.Resource
 import abs.apps.chatterbox.connect.models.RegisterResponse
 import abs.apps.chatterbox.connect.repositories.IUserRepository
-import abs.apps.chatterbox.connect.repositories.UserRepository
 import abs.apps.chatterbox.data.Credentials
 import abs.apps.chatterbox.data.Messages
 import abs.apps.chatterbox.data.repositories.ICredentialsRepository
 import abs.apps.chatterbox.data.repositories.IMessageRepository
-import abs.apps.chatterbox.data.repositories.MessageRepository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -27,6 +25,7 @@ class MessageViewModel @Inject constructor(
 
     private var _credentials : Credentials? = null;
     private val _messages = MutableLiveData<List<Messages>>()
+    private var connectedToServer = false;
     val messages: LiveData<List<Messages>> get() = _messages
 
     fun loadMessages(clientId: Int) {
@@ -46,6 +45,9 @@ class MessageViewModel @Inject constructor(
             )
             messageRepository.insertMessage(messages)
             loadMessages(messages.clientId)
+            if (connectedToServer) {
+
+            }
 
         }
     }
@@ -85,13 +87,14 @@ class MessageViewModel @Inject constructor(
     }
     fun onStartChatClicked() {
         viewModelScope.launch {
-            startChat()
+            connectToWebSocketServer()
         }
     }
 
-    suspend fun startChat() {
+    private suspend fun connectToWebSocketServer() {
         _credentials = credentialsRepository.getCredentials()
         _credentials?.let { userRepository.connectWebSocket(it.token) }
+        connectedToServer = true
     }
 
 }
