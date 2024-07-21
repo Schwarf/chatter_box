@@ -38,14 +38,14 @@ import androidx.hilt.navigation.compose.hiltViewModel
 @Composable
 fun ChatScreen(clientId: Int) {
     val viewModel: MessageViewModel = hiltViewModel()
-    val onRegisterButtonClick: () -> Unit = {viewModel.attemptRegistration()}
+    val onRegisterButtonClick: () -> Unit = { viewModel.attemptRegistration() }
 //    val onStartChatButtonClick: () -> Unit = {viewModel.onStartChatClicked()}
     Log.d("ChatScreen", "ChatScreen called")
     viewModel.loadMessages(clientId)
     val messages by viewModel.messages.observeAsState(emptyList())
     var messageText by remember { mutableStateOf("") }
-    // TODO: This state is not live-/real-time updated
-    val credentials by viewModel.credentials.observeAsState()
+    val registrationComplete by viewModel.registrationComplete.observeAsState(false)
+
 
     Box(
         modifier = Modifier
@@ -58,13 +58,11 @@ fun ChatScreen(clientId: Int) {
                 .padding(bottom = 56.dp) // Ensure space for the input field
         ) {
             MessageList(
-                messages = messages,
-                modifier = Modifier.weight(1f)
+                messages = messages, modifier = Modifier.weight(1f)
             )
             Spacer(modifier = Modifier.height(20.dp))
         }
-        MessageInput(
-            messageText = messageText,
+        MessageInput(messageText = messageText,
             onMessageTextChanged = { messageText = it },
             onSendClick = {
                 viewModel.sendMessage(messageText)
@@ -73,17 +71,15 @@ fun ChatScreen(clientId: Int) {
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .fillMaxWidth()
-                .padding(horizontal = 8.dp, vertical = 20.dp)
+                .padding(horizontal = 8.dp, vertical = 20.dp),
+            isEnabled = registrationComplete
         )
         IconButton(
-            onClick = onRegisterButtonClick,
-            modifier = Modifier.align(Alignment.TopStart),
-            // TODO: This state is not live-/real-time updated
-            enabled = credentials == null
+            onClick = onRegisterButtonClick, modifier = Modifier.align(Alignment.TopStart),
+            enabled = !registrationComplete
         ) {
             Icon(
-                imageVector = Icons.Default.CheckCircle,
-                contentDescription = "Register"
+                imageVector = Icons.Default.CheckCircle, contentDescription = "Register"
             )
         }
 //        IconButton(
@@ -102,8 +98,7 @@ fun ChatScreen(clientId: Int) {
 @Composable
 fun MessageList(messages: List<Messages>, modifier: Modifier = Modifier) {
     LazyColumn(
-        modifier = Modifier.fillMaxHeight(),
-        reverseLayout = true
+        modifier = Modifier.fillMaxHeight(), reverseLayout = true
     ) {
         items(messages) { message -> MessageItem(message) }
     }
@@ -128,21 +123,24 @@ fun MessageInput(
     onMessageTextChanged: (String) -> Unit,
     onSendClick: () -> Unit,
     modifier: Modifier,
+    isEnabled: Boolean
 ) {
     Row(
-        modifier = modifier,
-        verticalAlignment = Alignment.CenterVertically
+        modifier = modifier, verticalAlignment = Alignment.CenterVertically
     ) {
-        TextField(
-            value = messageText,
+        TextField(value = messageText,
             onValueChange = onMessageTextChanged,
             modifier = Modifier.weight(1f),
-            placeholder = { Text("Type a message") }
-        )
-        IconButton(onClick = onSendClick) {
+            placeholder = { Text("Type a message") })
+        IconButton(
+            onClick = onSendClick,
+            enabled = isEnabled
+        ) {
+
             Icon(
-                imageVector = Icons.AutoMirrored.Default.Send, contentDescription = "Send",
-                tint = Color.Green
+                imageVector = Icons.AutoMirrored.Default.Send,
+                contentDescription = "Send",
+                tint = if (isEnabled) Color.Green else Color.Gray
             )
         }
     }
