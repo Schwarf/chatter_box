@@ -62,7 +62,8 @@ fun ChatScreen(clientId: Int) {
             )
             Spacer(modifier = Modifier.height(20.dp))
         }
-        MessageInput(messageText = messageText,
+        MessageInput(
+            messageText = messageText,
             onMessageTextChanged = { messageText = it },
             onSendClick = {
                 viewModel.sendMessage(messageText)

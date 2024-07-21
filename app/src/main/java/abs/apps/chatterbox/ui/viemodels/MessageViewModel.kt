@@ -34,6 +34,8 @@ class MessageViewModel @Inject constructor(
         attemptWebSocketConnection()
     }
 
+    // TODO: Inefficient if registration is done first. It would be better then to provide just
+    //  the token instead of loading just inserted credentials.
     private fun attemptWebSocketConnection() {
         viewModelScope.launch {
             _credentials.value = credentialsRepository.getCredentials()
@@ -98,17 +100,20 @@ class MessageViewModel @Inject constructor(
                         resource.data?.let { responseData ->
                             handleSuccess(responseData)
                             viewModelScope.launch {
-                                credentialsRepository.updateCredentials(Credentials(
-                                    idAtServer = responseData.id,
-                                    userName = responseData.username,
-                                    token = responseData.token,
-                                    salt = responseData.salt
-                                ))
+                                credentialsRepository.updateCredentials(
+                                    Credentials(
+                                        idAtServer = responseData.id,
+                                        userName = responseData.username,
+                                        token = responseData.token,
+                                        salt = responseData.salt
+                                    )
+                                )
                                 _registrationComplete.postValue(true)
                                 attemptWebSocketConnection()
                             }
                         }
                     }
+
                     is Resource.Error -> handleError(resource.message)
                     is Resource.Loading -> handleLoading()
                 }
@@ -116,4 +121,4 @@ class MessageViewModel @Inject constructor(
         } ?: Log.e(TAG, "Registration request is null")
     }
 
-    }
+}
