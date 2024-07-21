@@ -44,6 +44,7 @@ fun ChatScreen(clientId: Int) {
     viewModel.loadMessages(clientId)
     val messages by viewModel.messages.observeAsState(emptyList())
     var messageText by remember { mutableStateOf("") }
+    // TODO: This state is not live-/real-time updated
     val credentials by viewModel.credentials.observeAsState()
 
     Box(
@@ -77,6 +78,7 @@ fun ChatScreen(clientId: Int) {
         IconButton(
             onClick = onRegisterButtonClick,
             modifier = Modifier.align(Alignment.TopStart),
+            // TODO: This state is not live-/real-time updated
             enabled = credentials == null
         ) {
             Icon(
