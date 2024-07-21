@@ -13,7 +13,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import android.util.Log
+import com.google.gson.Gson
 import kotlinx.coroutines.launch
+import java.security.MessageDigest
 import javax.inject.Inject
 
 @HiltViewModel
@@ -56,18 +58,31 @@ class MessageViewModel @Inject constructor(
         }
     }
 
+    fun generateHash(message: String, salt: String): String {
+        val data = message + salt
+        val md = MessageDigest.getInstance("SHA-256")
+        val hashBytes = md.digest(data.toByteArray())
+        return hashBytes.joinToString("") { "%02x".format(it) }
+    }
+
     fun sendMessage(messageText: String) {
         viewModelScope.launch {
-            val messages = Messages(
-                clientId = 1,
-                text = messageText,
-                timestamp_ms = System.currentTimeMillis(),
-                hash = "some_hash_value",
-                chatId = "XX"
-            )
-            messageRepository.insertMessage(messages)
-            loadMessages(messages.clientId)
-
+            val message = credentials.value?.let {
+                val hash = generateHash(messageText, it.salt)
+                Messages(
+                    clientId = it.idAtServer,
+                    text = messageText,
+                    timestamp_ms = System.currentTimeMillis(),
+                    hash = hash,
+                    chatId = "XX"
+                )
+            }
+            if (message != null) {
+                messageRepository.insertMessage(message)
+                loadMessages(message.clientId)
+            }
+            val messageJson = Gson().toJson(message)
+            userRepository.sendWebSocketMessage(messageJson)
         }
     }
 
