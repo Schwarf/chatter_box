@@ -27,20 +27,23 @@ class MessageViewModel @Inject constructor(
     val credentials: LiveData<Credentials?> get() = _credentials
     private val _messages = MutableLiveData<List<Messages>>()
     val messages: LiveData<List<Messages>> get() = _messages
-    private var connectedToServer = false;
+    private val _registrationComplete = MutableLiveData<Boolean>(false)
+    val registrationComplete: LiveData<Boolean> = _registrationComplete
 
     init {
-        loadCredentials()
+        attemptWebSocketConnection()
     }
 
-    private fun loadCredentials() {
+    private fun attemptWebSocketConnection() {
         viewModelScope.launch {
             _credentials.value = credentialsRepository.getCredentials()
-            if (_credentials.value == null)
+            if (_credentials.value == null) {
                 Log.d("CREDENTIALS", "Credentials are null")
+            } else {
+                _registrationComplete.postValue(true)
+            }
             _credentials.value?.let {
                 userRepository.connectWebSocket(it.token)
-                connectedToServer = true
             }
         }
     }
@@ -62,9 +65,6 @@ class MessageViewModel @Inject constructor(
             )
             messageRepository.insertMessage(messages)
             loadMessages(messages.clientId)
-            if (connectedToServer) {
-
-            }
 
         }
     }
@@ -91,16 +91,29 @@ class MessageViewModel @Inject constructor(
 
     fun attemptRegistration() {
         val registerRequest = userRepository.loadRegistrationCredentials()
-        if (registerRequest != null) {
-            userRepository.registerUser(registerRequest).observeForever { resource ->
-                // Handle the response here
+        registerRequest?.let {
+            userRepository.registerUser(it).observeForever { resource ->
                 when (resource) {
-                    is Resource.Success -> handleSuccess(resource.data)
+                    is Resource.Success -> {
+                        resource.data?.let { responseData ->
+                            handleSuccess(responseData)
+                            viewModelScope.launch {
+                                credentialsRepository.updateCredentials(Credentials(
+                                    idAtServer = responseData.id,
+                                    userName = responseData.username,
+                                    token = responseData.token,
+                                    salt = responseData.salt
+                                ))
+                                _registrationComplete.postValue(true)
+                                attemptWebSocketConnection()
+                            }
+                        }
+                    }
                     is Resource.Error -> handleError(resource.message)
                     is Resource.Loading -> handleLoading()
                 }
             }
-        }
+        } ?: Log.e(TAG, "Registration request is null")
     }
 
-}
+    }
