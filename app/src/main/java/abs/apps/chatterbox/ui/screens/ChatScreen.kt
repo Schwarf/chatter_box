@@ -39,11 +39,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 fun ChatScreen(clientId: Int) {
     val viewModel: MessageViewModel = hiltViewModel()
     val onRegisterButtonClick: () -> Unit = {viewModel.attemptRegistration()}
-    val onStartChatButtonClick: () -> Unit = {viewModel.onStartChatClicked()}
+//    val onStartChatButtonClick: () -> Unit = {viewModel.onStartChatClicked()}
     Log.d("ChatScreen", "ChatScreen called")
     viewModel.loadMessages(clientId)
     val messages by viewModel.messages.observeAsState(emptyList())
     var messageText by remember { mutableStateOf("") }
+    val credentials by viewModel.credentials.observeAsState()
 
     Box(
         modifier = Modifier
@@ -75,22 +76,24 @@ fun ChatScreen(clientId: Int) {
         )
         IconButton(
             onClick = onRegisterButtonClick,
-            modifier = Modifier.align(Alignment.TopStart)
+            modifier = Modifier.align(Alignment.TopStart),
+            enabled = credentials == null
         ) {
             Icon(
                 imageVector = Icons.Default.CheckCircle,
                 contentDescription = "Register"
             )
         }
-        IconButton(
-            onClick = onStartChatButtonClick,
-            modifier = Modifier.align(Alignment.TopEnd)
-        ) {
-            Icon(
-                imageVector = Icons.Default.AccountBox,
-                contentDescription = "Chat"
-            )
-        }
+//        IconButton(
+//            onClick = onStartChatButtonClick,
+//            modifier = Modifier.align(Alignment.TopEnd),
+//            enabled = credentials != null
+//        ) {
+//            Icon(
+//                imageVector = Icons.Default.AccountBox,
+//                contentDescription = "Chat"
+//            )
+//        }
     }
 }
 

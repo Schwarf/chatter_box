@@ -23,10 +23,27 @@ class MessageViewModel @Inject constructor(
     private val credentialsRepository: ICredentialsRepository
 ) : ViewModel() {
 
-    private var _credentials : Credentials? = null;
+    private val _credentials = MutableLiveData<Credentials?>()
+    val credentials: LiveData<Credentials?> get() = _credentials
     private val _messages = MutableLiveData<List<Messages>>()
-    private var connectedToServer = false;
     val messages: LiveData<List<Messages>> get() = _messages
+    private var connectedToServer = false;
+
+    init {
+        loadCredentials()
+    }
+
+    private fun loadCredentials() {
+        viewModelScope.launch {
+            _credentials.value = credentialsRepository.getCredentials()
+            if (_credentials.value == null)
+                Log.d("CREDENTIALS", "Credentials are null")
+            _credentials.value?.let {
+                userRepository.connectWebSocket(it.token)
+                connectedToServer = true
+            }
+        }
+    }
 
     fun loadMessages(clientId: Int) {
         viewModelScope.launch {
@@ -84,17 +101,6 @@ class MessageViewModel @Inject constructor(
                 }
             }
         }
-    }
-    fun onStartChatClicked() {
-        viewModelScope.launch {
-            connectToWebSocketServer()
-        }
-    }
-
-    private suspend fun connectToWebSocketServer() {
-        _credentials = credentialsRepository.getCredentials()
-        _credentials?.let { userRepository.connectWebSocket(it.token) }
-        connectedToServer = true
     }
 
 }
