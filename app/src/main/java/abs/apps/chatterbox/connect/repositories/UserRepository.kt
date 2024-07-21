@@ -24,6 +24,7 @@ class UserRepository @Inject constructor(
     private val credentialsRepository: ICredentialsRepository
 ) : IUserRepository {
 
+    private var webSocket: WebSocket? = null
 
     override fun registerUser(registerRequest: RegisterRequest): LiveData<Resource<RegisterResponse>> {
         val result = MutableLiveData<Resource<RegisterResponse>>()
@@ -100,6 +101,16 @@ class UserRepository @Inject constructor(
                 Log.e("WebSocket", "Error : " + t.message)
             }
         }
-        apiHelper.connectWebSocket(token, listener)
-    }}
+        webSocket = apiHelper.connectWebSocket(token, listener)
+    }
+
+    override fun sendWebSocketMessage(message: String) {
+        if (webSocket != null && webSocket!!.send(message)) {
+            Log.d("WebSocket", "Message sent: $message")
+        } else {
+            Log.e("WebSocket", "Failed to send message or WebSocket not connected")
+        }
+    }
+}
+
 

@@ -9,4 +9,5 @@ interface IUserRepository {
     fun registerUser(registerRequest: RegisterRequest): LiveData<Resource<RegisterResponse>>
     fun loadRegistrationCredentials(): RegisterRequest?
     fun connectWebSocket(token: String)
+    fun sendWebSocketMessage(jsonFormatMessage : String)
 }
