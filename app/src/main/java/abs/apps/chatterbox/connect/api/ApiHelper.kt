@@ -4,14 +4,13 @@ import abs.apps.chatterbox.connect.models.RegisterRequest
 import abs.apps.chatterbox.connect.models.RegisterResponse
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response as RetrofitResponse
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.WebSocket
 import okhttp3.WebSocketListener
-import okhttp3.Response
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response as RetrofitResponse
 
 class ApiHelper(private val chatService: ChatService) {
 

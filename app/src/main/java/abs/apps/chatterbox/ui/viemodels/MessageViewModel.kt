@@ -7,13 +7,13 @@ import abs.apps.chatterbox.data.Credentials
 import abs.apps.chatterbox.data.Messages
 import abs.apps.chatterbox.data.repositories.ICredentialsRepository
 import abs.apps.chatterbox.data.repositories.IMessageRepository
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dagger.hilt.android.lifecycle.HiltViewModel
-import android.util.Log
 import com.google.gson.Gson
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.security.MessageDigest
 import javax.inject.Inject
